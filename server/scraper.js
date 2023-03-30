@@ -1,8 +1,10 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
+const path = require('path')
 
 const fetchPrices = async (movie_name) => {
     try {
+        console.log(path.join(__dirname, '../', 'client', 'build'))
         let response = await axios.get('https://www.atomtickets.com/')
         let html = response.data
         let $ = cheerio.load(html)
