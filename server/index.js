@@ -20,8 +20,8 @@ app.use(express.static(path.join(__dirname, '../', "client", "build")))
 //     res.sendFile(path.join(__dirname,"../","client", "build", "index.html"));
 // });
 
-
 app.use('/api', api)
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

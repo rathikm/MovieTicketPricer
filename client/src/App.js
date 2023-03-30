@@ -39,7 +39,7 @@ function App() {
         } 
       }
       console.log(m)
-      const response = await fetch('http://localhost:3001/api/' + m)
+      const response = await fetch('api/' + m)
       m = await response.json()
       setMovies(m)
     } catch (err) {
