@@ -9,8 +9,8 @@
     "server": "node server/index.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "cd client && npm install && cd .. && npm run build --prefix client",
-    "heroku_postbuild": "npm install && cd client && npm install && npm install react-scripts --save && npm run build"
+    "heroku_postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    
   },
   "keywords": [],
   "author": "",
