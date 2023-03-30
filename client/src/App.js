@@ -5,8 +5,7 @@ import './App.css';
 function App() {
   const [movieName, setMovieName] = useState("")
   const [movies, setMovies] = useState([])
-  
-  const handleChange = (event) => {
+andleChange = (event) => {
     setMovieName(event.target.value)
   }
 
