@@ -10,7 +10,6 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku_postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-    
   },
   "keywords": [],
   "author": "",
@@ -22,6 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "react-scripts": "^5.0.1",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.9"
   }
 }

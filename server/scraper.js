@@ -1,12 +1,20 @@
 const axios = require('axios')
+const request = require('request-promise-native')
 const cheerio = require('cheerio')
-const path = require('path')
+const ob = require('./index') 
 
 const fetchPrices = async (movie_name) => {
     try {
-        console.log(path.join(__dirname, '../', 'client', 'build'))
-        let response = await axios.get('https://www.atomtickets.com/')
-        let html = response.data
+        let user_ip = ob.ip.ipAddress
+        let options = {
+            url: 'https://www.atomtickets.com/',
+            headers: {
+                'X-Forwarded-For': user_ip
+              }
+        }
+        
+        //let response = await axios.get('https://www.atomtickets.com/')
+        let html = await request(options)
         let $ = cheerio.load(html)
         let movies = []
         let movie_objects_list = []
@@ -20,10 +28,15 @@ const fetchPrices = async (movie_name) => {
         })
         //currently assuming only one movie is found
         let movie_link = movies[0]
+        options = {
+            url: 'https://www.atomtickets.com' + movie_link,
+            headers: {
+                'X-Forwarded-For': user_ip
+              }
+        }
         //goes to link of showtimes for movie
-        let response_2 = await axios.get('https://www.atomtickets.com' + movie_link)
-        let show_page = response_2.data
-        let $$ = cheerio.load(show_page)
+        html = await request(options)
+        let $$ = cheerio.load(html)
         let el_arr_showtimes = []
         
         $$("div.showtime-panel").each((index, el) => {
@@ -58,15 +71,21 @@ const fetchPrices = async (movie_name) => {
                 })
                 for (const link of checkout_links) {
                     let response_3 = ""
+                    let checkout_html = ""
                     try {
                         console.log(link)
-                        response_3 = await axios.get(link)
+                        options = {
+                            url: link,
+                            headers: {
+                                'X-Forwarded-For': user_ip
+                              }
+                        }
+                        checkout_html = await request(options)
                     } catch (err) {
                         console.error(err)
                         continue
                     }
-                    
-                    const checkout_html = response_3.data
+
                     const $$$ = cheerio.load(checkout_html)
                     let combo = {}
                     combo.prices = []
